@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
+  const [jokes, setJokes] = useState([]);
+
+  const fetchJokes = async () => {
+    const res = await fetch("https://api.chucknorris.io/jokes/random");
+    const data = await res.json();
+    setJokes(data);
+  };
+
+  useEffect(() => {
+    fetchJokes();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>
+        Adventure with Chuck Norris{" "}
+        <span style={{ fontSize: "1.3em" }}> &#128514; </span>
+      </h1>
+      <p style={{ fontSize: "1.3em" }}>{jokes.value}</p>
+      <button className="btn" onClick={fetchJokes}>
+        Get Chuck's Next Move
+      </button>
     </div>
   );
 }
